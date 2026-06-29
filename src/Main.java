@@ -3,13 +3,16 @@ package src;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Scanner;
 import java.net.URI;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         String apiKey = System.getenv("GROQ_API_KEY");
         
-        String userMessage = "Improve this message: Hello how r u";
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your message that you want to improve: ");
+        String userMessage = scanner.nextLine();
         String jsonBody = "{\"model\": \"llama-3.3-70b-versatile\", \"messages\": [{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
         
         HttpClient client = HttpClient.newHttpClient();

@@ -13,8 +13,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your message that you want to improve: ");
         String userMessage = scanner.nextLine();
-        String jsonBody = "{\"model\": \"llama-3.3-70b-versatile\", \"messages\": [{\"role\": \"user\", \"content\": \"" + userMessage + "\"}]}";
+        String prompt = "You are a writing assistant. Improve the grammar and clarity of this message, and only return the improved version, nothing else: " + userMessage;
+
+        String jsonBody = "{\"model\": \"llama-3.3-70b-versatile\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
         
+
+
         HttpClient client = HttpClient.newHttpClient();
         
         HttpRequest request = HttpRequest.newBuilder()
@@ -26,6 +30,15 @@ public class Main {
         
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         
-        System.out.println(response.body()); // abhi hume json parsing krni padegi
+      //  System.out.println(response.body()); // abhi hume json parsing krni padegi
+          String responseBody = response.body();
+          int startIndex = responseBody.indexOf("\"content\":\"") + "\"content\":\"".length();
+          int endIndex = responseBody.indexOf("\"" , startIndex);
+
+
+          String improvedMessage = responseBody.substring(startIndex, endIndex);
+    
+          System.out.println(improvedMessage);
+    
     }
 }

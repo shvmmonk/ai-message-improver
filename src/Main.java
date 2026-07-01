@@ -31,7 +31,10 @@ public class Main {
             String jsonBody = "{\"model\": \"llama-3.3-70b-versatile\", \"messages\": [{\"role\": \"user\", \"content\": \""
                     + prompt + "\"}]}";
 
-            HttpClient client = HttpClient.newHttpClient();
+
+            
+            try {
+                HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
@@ -50,7 +53,12 @@ public class Main {
             System.out.println(fullContent
                     .replace("\\n", "\n")
                     .replace("\\\"", "\""));
+            } catch (Exception e) {
+                System.out.println("Something went wrong" + e.getMessage());
+                System.out.println("Please check your internet connection and try again :(");
+            }
         }
+    
 
     }
 }

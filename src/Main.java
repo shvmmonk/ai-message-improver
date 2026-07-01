@@ -9,15 +9,25 @@ import java.net.URI;
 public class Main {
     public static void main(String[] args) throws Exception {
         String apiKey = System.getenv("GROQ_API_KEY");
+
+         Scanner scanner = new Scanner(System.in);
         
-        Scanner scanner = new Scanner(System.in);
+        while (true) {
+       
         System.out.print("Enter your message that you want to improve: ");
         String userMessage = scanner.nextLine();
+
+        if(userMessage.equalsIgnoreCase("exit")){
+            System.out.println("Good Bye ");
+            return;
+        }
+        
+
         String prompt = "You are a writing assistant. Improve the grammar and clarity of this message, and only return the improved version, nothing else: " + userMessage;
 
         String jsonBody = "{\"model\": \"llama-3.3-70b-versatile\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
         
-
+    
 
         HttpClient client = HttpClient.newHttpClient();
         
@@ -39,6 +49,8 @@ public class Main {
           String improvedMessage = responseBody.substring(startIndex, endIndex);
     
           System.out.println(improvedMessage);
+
+    }
     
     }
 }

@@ -34,6 +34,9 @@ public class Main {
 
             
             try {
+                System.out.println("\n=============================");
+System.out.println("       AI SUGGESTIONS        ");
+System.out.println("=============================");
                 HttpClient client = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -56,6 +59,7 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Something went wrong" + e.getMessage());
                 System.out.println("Please check your internet connection and try again :(");
+                System.out.println("=============================\n");
             }
         }
     

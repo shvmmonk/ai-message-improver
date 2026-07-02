@@ -9,25 +9,30 @@ Type a message (like a WhatsApp text, email, or any informal message), and the a
 - **✨ Improved version** — a polished, grammar-correct rewrite
 - **📝 Grammar analysis** — specific mistakes explained clearly
 - **🎯 Tone analysis** — whether your message sounds formal/informal, and how to improve it
+- **🔄 Loop** — analyze multiple messages in one session, type `exit` to quit
+- **⚠️ Error handling** — friendly messages for network/API failures, no crashes
+- **🖥️ Clean formatting** — results displayed with clear section separators
 
 ### Example
 
 **Input:**
 ```
-hey i want to make an order
+Hey i want to go out with my freind
 ```
 
 **Output:**
 ```
-IMPROVED: Hello, I would like to place an order.
-
-GRAMMAR:
-* "hey" should be replaced with a more formal greeting like "Hello"
-* "i" should be capitalized to "I"
-* "make an order" can be rephrased to "place an order" for better clarity
-
-TONE: The tone is informal and abrupt. Consider using more polite language
-like "I would like to place an order" to convey respect and courtesy.
+=============================
+       AI SUGGESTIONS        
+=============================
+IMPROVED: I would like to go out with my friend.
+GRAMMAR: 
+* "Hey" is informal, consider a more formal greeting
+* "i" should be capitalized as "I"
+* "freind" is a spelling mistake, correct spelling is "friend"
+TONE: The tone is casual and informal. Consider using more polished 
+language for formal or professional communication.
+=============================
 ```
 
 ## Tech Stack
@@ -71,11 +76,16 @@ Once running, type your message and press Enter. Type `exit` to quit.
 
 ```
 Enter your message that you want to improve: helo how r u
+
+=============================
+       AI SUGGESTIONS        
+=============================
 IMPROVED: Hello, how are you?
 GRAMMAR:
 * "helo" is a misspelling of "Hello"
-* "r" and "u" are informal abbreviations, use "are" and "you" instead
-TONE: The tone is very casual and informal...
+* "r" and "u" are informal abbreviations, use "are" and "you"
+TONE: The tone is very casual...
+=============================
 
 Enter your message that you want to improve: exit
 Good Bye
@@ -89,13 +99,14 @@ Good Bye
 4. Sends an HTTP POST request to Groq's API using Java's built-in `HttpClient`
 5. Parses the JSON response using `String.indexOf()` and `substring()` to extract just the AI's content
 6. Cleans up escaped characters (`\n`, `\"`) for readable console output
-7. Loops back for the next message
+7. Displays results with clean formatting and section separators
+8. Loops back for the next message — handles errors gracefully without crashing
 
 ## Project Structure
 
 ```
 src/
-└── Main.java   # All logic: user input, API call, JSON parsing, output formatting
+└── Main.java   # All logic: user input, API call, JSON parsing, output formatting, error handling
 ```
 
 ## Key Concepts Used
@@ -105,16 +116,16 @@ src/
 - **JSON parsing** — manually extracting fields using `indexOf()` and `substring()`
 - **Environment variables** — securely storing API keys outside source code
 - **String manipulation** — `.replace()`, `.indexOf()`, `.substring()`
+- **Error handling** — `try-catch` for graceful failure recovery
 
 ## Known Limitations
 
 - JSON parsing is done manually (string-based) — could break if the AI response contains unusual formatting
-- No error handling yet for network failures or invalid API keys
 - Single-threaded — waits for API response before accepting next input
 
 ## Future Improvements
 
-- Add proper error handling (`try-catch` for network/API failures)
-- Use a JSON library (Gson/Jackson via Maven) for more robust parsing
-- Add better console formatting with section separators
+- Use a proper JSON library (Gson/Jackson via Maven) for more robust parsing
 - Build a Spring Boot web version with a simple HTML/CSS frontend
+- Add conversation history so the AI remembers previous messages in the session
+- Support multiple "modes" — casual chat, email writer, professional tone fixer

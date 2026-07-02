@@ -31,38 +31,35 @@ public class Main {
             String jsonBody = "{\"model\": \"llama-3.3-70b-versatile\", \"messages\": [{\"role\": \"user\", \"content\": \""
                     + prompt + "\"}]}";
 
-
-            
             try {
                 System.out.println("\n=============================");
-System.out.println("       AI SUGGESTIONS        ");
-System.out.println("=============================");
+                System.out.println("       AI SUGGESTIONS        ");
+                System.out.println("=============================");
                 HttpClient client = HttpClient.newHttpClient();
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
-                    .header("Authorization", "Bearer " + apiKey)
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                    .build();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
+                        .header("Authorization", "Bearer " + apiKey)
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                        .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // System.out.println(response.body()); // abhi hume json parsing krni padegi
-            String responseBody = response.body();
-            int startIndex = responseBody.indexOf("\"content\":\"") + "\"content\":\"".length();
-            int endIndex = responseBody.indexOf("\"},\"logprobs\"");
-            String fullContent = responseBody.substring(startIndex, endIndex);
-            System.out.println(fullContent
-                    .replace("\\n", "\n")
-                    .replace("\\\"", "\""));
+                // System.out.println(response.body()); // abhi hume json parsing krni padegi
+                String responseBody = response.body();
+                int startIndex = responseBody.indexOf("\"content\":\"") + "\"content\":\"".length();
+                int endIndex = responseBody.indexOf("\"},\"logprobs\"");
+                String fullContent = responseBody.substring(startIndex, endIndex);
+                System.out.println(fullContent
+                        .replace("\\n", "\n")
+                        .replace("\\\"", "\""));
             } catch (Exception e) {
                 System.out.println("Something went wrong" + e.getMessage());
                 System.out.println("Please check your internet connection and try again :(");
                 System.out.println("=============================\n");
             }
         }
-    
 
     }
 }
